@@ -16,7 +16,7 @@
     padding: 0 !important;
 }
 
-#box {
+.box {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -32,7 +32,7 @@
             transition: transform 3s;
 }
 
-#box li {
+.box li {
     display: block;
     position: absolute;
     border: 2px solid black;
@@ -44,53 +44,57 @@
     background: rgba(255,0,0,1);
 }
 
-#box .front,
-#box .back {
+.box .front,
+.box .back {
     width: 98%;
     height: 98%;    
 }
 
 
-#box .right,
-#box .left {
+.box .right,
+.box .left {
     width: 98%;
     height: 98%;
 }
 
-#box .top,
-#box .bottom {
+.box .top,
+.box .bottom {
     width: 98%;
     height: 98%;
 }
 
 
-#box .front  {
+.box .front  {
     transform: rotateX(90deg) translateY(50%) rotateX(-90deg);
 }
-#box .back   {
+.box .back   {
     transform: rotateY(180deg) rotateX(90deg) translateY(50%) rotateX(-90deg);
 }
-#box .right {
+.box .right {
     transform: translateX(50%) rotateY(90deg);
 }
-#box .left {
+.box .left {
     transform: translateX(-50%) rotateY(-90deg);
 }
-#box .top {
+.box .top {
     transform: translateY(-50%) rotateX(90deg);
 
 }
-#box .bottom {
+.box .bottom {
     transform: translateY(50%) rotateX(-90deg);
 }
 
-#box:hover {
+.clearBlock {
     /* Show back side */
-    transform: translateZ( -50px ) rotateX( -360deg );
+    transform: translateZ( -50px ) rotateX( -180deg );
 }
 
 
+/* MEDIA QUERIES */
 
+.container {
+    width: 70%;
+}
 
 
 
