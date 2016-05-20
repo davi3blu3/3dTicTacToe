@@ -18,7 +18,15 @@ $(document).ready(function() {
     $('.cascade-6').afterTime(3000, function () {
         $('.cascade-6').addClass("clearBlock");
     });
+
     
+    $('.box').click(function() {
+        $(this).removeClass('clearBlock');
+        // $(this).addClass('showRight');
+        $(this).addClass('showLeft');
+       
+    });
+
 });
 
 jQuery.fn.extend({
