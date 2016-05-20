@@ -5,7 +5,7 @@
     height: 150px;
     position: relative;
     margin: 50px;
-    border: 1px solid #CCC;
+/*    border: 1px solid #CCC;*/
     -webkit-perspective: 900px;
        -moz-perspective: 900px;
          -o-perspective: 900px;
