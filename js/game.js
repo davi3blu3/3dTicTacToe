@@ -1,15 +1,15 @@
 function display_board(board) {
-  console.log( " #{board[0]} | #{board[1]} | #{board[2]} ");
+  console.log( " " + board[0] + " | " + board[1] + " | " + board[2] + " ");
   console.log( "-----------");
-  console.log( " #{board[3]} | #{board[4]} | #{board[5]} ");
+  console.log( " " + board[3] + " | " + board[4] + " | " + board[5] + " ");
   console.log( "-----------");
-  console.log( " #{board[6]} | #{board[7]} | #{board[8]} ");
+  console.log( " " + board[6] + " | " + board[7] + " | " + board[8] + " ");
 }
 
 //function move(board, location, current_player = "X") {
 //  board[location] = current_player
 //}
-//
+
 //function position_taken?(board, location) {
 //  board[location] != " " && board[location] != ""
 //}
@@ -30,6 +30,6 @@ function display_board(board) {
 //  end
 //}
 
-var board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
+var board = [" ", " ", "X", "X", " ", " ", " ", "O", " "];
 
 display_board(board);

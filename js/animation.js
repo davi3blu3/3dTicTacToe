@@ -2,6 +2,7 @@ $(document).ready(function() {
     var turn = true, // alternates between click animation
         i;
     
+    // START OF GAME CASCADING ANIMATION
     $('.cascade-1').afterTime(2000, function () {
         $('.cascade-1').addClass("clearBlock");
     });
@@ -25,9 +26,12 @@ $(document).ready(function() {
     
     $('.box').click(function() {
         $(this).removeClass('clearBlock');
+        console.log( $(this).attr('id'));
+        // X IS PLAYED
         if(turn) {
             $(this).addClass('showRight');
             turn = false;
+        // O IS PLAYED
         } else {
             $(this).addClass('showLeft');
             turn = true;
