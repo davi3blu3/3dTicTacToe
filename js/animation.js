@@ -26,14 +26,16 @@ $(document).ready(function() {
     
     $('.box').click(function() {
         $(this).removeClass('clearBlock');
-        console.log( $(this).attr('id'));
+        var location = ( $(this).attr('id') );
         // X IS PLAYED
         if(turn) {
             $(this).addClass('showRight');
+            move(location, "X");
             turn = false;
         // O IS PLAYED
         } else {
             $(this).addClass('showLeft');
+            move(location, "O");
             turn = true;
         }
     });
