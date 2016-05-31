@@ -1,19 +1,21 @@
-var board = [" ", " ", "X", "X", " ", " ", " ", "O", " "];
+var board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
 
 display_board(board);
 
 
 function display_board(board) {
-  console.log( " " + board[0] + " | " + board[1] + " | " + board[2] + " ");
-  console.log( "-----------");
-  console.log( " " + board[3] + " | " + board[4] + " | " + board[5] + " ");
-  console.log( "-----------");
-  console.log( " " + board[6] + " | " + board[7] + " | " + board[8] + " ");
+    console.log( " " + board[0] + " | " + board[1] + " | " + board[2] + " ");
+    console.log( "-----------");
+    console.log( " " + board[3] + " | " + board[4] + " | " + board[5] + " ");
+    console.log( "-----------");
+    console.log( " " + board[6] + " | " + board[7] + " | " + board[8] + " ");
 }
 
 // move(board, location, current_player = "X")
 function move(location, player) {
-  console.log("Move to " + location + " by " + player);
+    console.log("Move to " + location + " by " + player);
+    board[location] = player;
+    display_board(board);
 }
 
 //function position_taken?(board, location) {
