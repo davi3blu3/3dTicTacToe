@@ -44,6 +44,10 @@
     background: rgba(255,0,0,0.75);
 }
 
+.box .back {
+    background: rgba(255,0,0,1);
+}
+
 .box .front,
 .box .back {
     width: 98%;

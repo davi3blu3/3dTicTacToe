@@ -1,6 +1,6 @@
 $(document).ready(function() {
     var turn = true, // alternates between click animation
-        i;
+        i;  // currently unused, experimenting with iterative loop to simplify cascade effect
     
     cascade();
     
