@@ -1,3 +1,22 @@
+/* HEADER */
+
+header {
+    background-color: dodgerblue;
+    padding: 10px 0 15px 0;
+    text-align: center;
+}
+
+header h1 {
+    color: antiquewhite;
+    font-weight: bold;
+}
+
+button {
+    color: dodgerblue;
+    font-size: 20px;
+    right: 40px;
+}
+
 /* GAME BLOCKS */
 
 .cube-container {
