@@ -31,6 +31,7 @@ $(document).ready(function() {
         $('.box').removeClass('showRight');
         $('.box').removeClass('showLeft');
         $('.box').removeClass('clearBlock');
+        $('#banner').html("TIC-TAC-TOE!");
         cascade();
     })
     

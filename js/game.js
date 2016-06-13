@@ -1,4 +1,5 @@
-var board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
+var board = [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+    winResult;
 
 display_board(board);
 
@@ -21,28 +22,32 @@ function move(location, player) {
 
 function checkWin(board) {
     if (board [0] != " " && board[0] === board[1] && board[0] === board[2]) {
-        console.log( board[0] + " WINS!" );
+        winResult = board[0] + " WINS!";
     }
     if (board [3] != " " && board[3] === board[4] && board[3] === board[5]) {
-        console.log( board[3] + " WINS!" );
+        winResult = board[3] + " WINS!";
     }
     if (board [6] != " " && board[6] === board[7] && board[6] === board[8]) {
-        console.log( board[6] + " WINS!" );
+        winResult = board[6] + " WINS!";
     }
     if (board [0] != " " && board[0] === board[3] && board[0] === board[6]) {
-        console.log( board[0] + " WINS!" );
+        winResult = board[0] + " WINS!";
     }
     if (board [1] != " " && board[1] === board[4] && board[1] === board[7]) {
-        console.log( board[1] + " WINS!" );
+        winResult = board[1] + " WINS!";
     }
     if (board [2] != " " && board[2] === board[5] && board[2] === board[8]) {
-        console.log( board[2] + " WINS!" );
+        winResult = board[2] + " WINS!";
     }   
     if (board [0] != " " && board[0] === board[4] && board[0] === board[8]) {
-        console.log( board[0] + " WINS!" );
+        winResult = board[0] + " WINS!";
     }
     if (board [2] != " " && board[2] === board[4] && board[2] === board[6]) {
-        console.log( board[2] + " WINS!" );
-    }       
+        winResult = board[2] + " WINS!";
+    }
+    if (winResult != undefined) {
+        console.log(winResult);
+        $("#banner").html(winResult);
+    }
 }
 
