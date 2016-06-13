@@ -48,6 +48,7 @@ function checkWin(board) {
     if (winResult != undefined) {
         console.log(winResult);
         $("#banner").html(winResult);
+        winResult = undefined;
     }
 }
 

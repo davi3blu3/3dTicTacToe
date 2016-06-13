@@ -1,5 +1,6 @@
 $(document).ready(function() {
     var turn = true, // alternates between click animation
+        stopClick = true, // disables click during reset
         i;  // currently unused, experimenting with iterative loop to simplify cascade effect
     
     cascade();
@@ -23,6 +24,7 @@ $(document).ready(function() {
         });
         $('.cascade-6').afterTime(3250, function () {
             $('.cascade-6').addClass("clearBlock");
+            stopClick = false;
         });       
     }
 
@@ -32,22 +34,29 @@ $(document).ready(function() {
         $('.box').removeClass('showLeft');
         $('.box').removeClass('clearBlock');
         $('#banner').html("TIC-TAC-TOE!");
+        board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
+        stopClick = true;
+        turn = true;
         cascade();
     })
     
-    $('.box').click(function() {
-        $(this).removeClass('clearBlock');
-        var location = ( $(this).attr('id') );
-        // X IS PLAYED
-        if(turn) {
-            $(this).addClass('showRight');
-            move(location, "X");
-            turn = false;
-        // O IS PLAYED
-        } else {
-            $(this).addClass('showLeft');
-            move(location, "O");
-            turn = true;
+    $('.box').on("click", function() {
+        //disabled click during reset animation
+        if (!stopClick) {
+            $(this).removeClass('clearBlock');
+            var location = ( $(this).attr('id') );
+
+            // X IS PLAYED
+            if(turn) {
+                $(this).addClass('showRight');
+                move(location, "X");
+                turn = false;
+            // O IS PLAYED
+            } else {
+                $(this).addClass('showLeft');
+                move(location, "O");
+                turn = true;
+            }   
         }
     });
 
