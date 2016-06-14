@@ -1,7 +1,5 @@
 $(document).ready(function() {
-    var turn = true, // alternates between click animation
-        stopClick = true, // disables click during reset
-        i;  // currently unused, experimenting with iterative loop to simplify cascade effect
+    var stopClick = true; // disables click during reset
     
     cascade();
     
