@@ -45,18 +45,16 @@ $(document).ready(function() {
         if (!stopClick) {
             $(this).removeClass('clearBlock');
             var location = ( $(this).attr('id') );
+            $(this).addClass('showRight');
+            xMove(location, "X");
+            stopClick = true;
+            var oLoc = oMove();
+            $('#' + oLoc).afterTime(1000, function() {
+                $('#' + oLoc).addClass('showLeft');
+                return (stopClick = false);
+            });
+            
 
-            // X IS PLAYED
-            if(turn) {
-                $(this).addClass('showRight');
-                move(location, "X");
-                turn = false;
-            // O IS PLAYED
-            } else {
-                $(this).addClass('showLeft');
-                move(location, "O");
-                turn = true;
-            }   
         }
     });
 

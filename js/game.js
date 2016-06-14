@@ -12,12 +12,38 @@ function display_board(board) {
     console.log( " " + board[6] + " | " + board[7] + " | " + board[8] + " ");
 }
 
+function availableMoves(board) {
+    var moves = [],
+        i;
+    //check board for empty spaces
+    for (i = 0; i < board.length; i += 1) {
+        if (board[i] === " ") {
+            moves.push(i);
+        }
+    }
+    return moves;
+}
+
 // move(board, location, current_player = "X")
-function move(location, player) {
-    console.log("Move to " + location + " by " + player);
-    board[location] = player;
+function xMove(location, player) {
+    console.log("Move to " + location + " by X");
+    board[location] = "X";
     display_board(board);
     checkWin(board);
+
+}
+
+function oMove() {
+    var avail = availableMoves(board);
+
+    // select random available space
+    var location = avail[Math.floor(Math.random()*avail.length)];
+    
+    console.log("Move to " + location + " by O");
+    board[location] = "O";
+    display_board(board);
+    checkWin(board);
+    return location;
 }
 
 function checkWin(board) {
