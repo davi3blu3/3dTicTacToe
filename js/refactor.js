@@ -93,7 +93,7 @@ $(document).ready(function() {
                 winResult = "TIED!";
                 console.log(winResult);
                 $("#banner").html(winResult);
-                $('#banner').afterTime(2000, function () {
+                $('#banner').afterTime(2500, function () {
                     game.reset();
                 });
                 return true;
@@ -102,7 +102,7 @@ $(document).ready(function() {
             if (winResult != undefined) {
                 console.log(winResult);
                 $("#banner").html(winResult);
-                $('#banner').afterTime(2000, function () {
+                $('#banner').afterTime(2500, function () {
                     game.reset();
                 });
                 return true;
