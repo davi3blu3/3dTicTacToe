@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var stopClick = true; // disables click during reset
     var game = {
-
+        turn: 1,
         board: [" ", " ", " ", " ", " ", " ", " ", " ", " "],
 
         // DISPLAY GAMEBOARD IN CONSOLE
@@ -28,9 +28,10 @@ $(document).ready(function() {
         // PLAYER MOVES FOR X
         xMove: function(location, player) {
             stopClick = true;
-            console.log("Move to " + location + " by X");
+            console.log("Turn " + this.turn + " move to " + location + " by X");
             this.board[location] = "X";
-            this.display_board(this.board);
+            //this.display_board(this.board);
+            this.turn += 1;
             return this.checkWin(this.board);
         },
 
@@ -41,10 +42,11 @@ $(document).ready(function() {
             // select random available space
             var location = avail[Math.floor(Math.random()*avail.length)];
 
-            console.log("Move to " + location + " by O");
+            console.log("Turn " + this.turn + " move to " + location + " by O");
             this.board[location] = "O";
-            this.display_board(this.board);
+            //this.display_board(this.board);
             this.checkWin(this.board);
+            this.turn += 1;
             return location;
         },
 
@@ -74,6 +76,13 @@ $(document).ready(function() {
             }
             if (board [2] != " " && board[2] === board[4] && board[2] === board[6]) {
                 winResult = board[2] + " WINS!";
+            }
+            // GAME IS TIED
+            if (winResult == undefined && game.turn == 10) {
+                winResult = "TIED!";
+                console.log(winResult);
+                $("#banner").html(winResult);
+                return true;
             }
             // GAME IS OVER
             if (winResult != undefined) {
@@ -123,7 +132,7 @@ $(document).ready(function() {
         $('#banner').html("TIC-TAC-TOE!");
         game.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
         stopClick = true;
-        turn = true;
+        game.turn = 1;
         cascade();
     })
     
