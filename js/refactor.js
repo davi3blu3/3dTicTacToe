@@ -3,6 +3,17 @@ $(document).ready(function() {
     var game = {
         turn: 1,
         board: [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+        
+        reset: function() {
+            $('.box').removeClass('showRight');
+            $('.box').removeClass('showLeft');
+            $('.box').removeClass('clearBlock');
+            $('#banner').html("TIC-TAC-TOE!");
+            this.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
+            stopClick = true;
+            this.turn = 1;
+            cascade();
+        },
 
         // DISPLAY GAMEBOARD IN CONSOLE
         display_board: function(board) {
@@ -82,30 +93,22 @@ $(document).ready(function() {
                 winResult = "TIED!";
                 console.log(winResult);
                 $("#banner").html(winResult);
+                $('#banner').afterTime(2000, function () {
+                    game.reset();
+                });
                 return true;
             }
             // GAME IS OVER
             if (winResult != undefined) {
                 console.log(winResult);
                 $("#banner").html(winResult);
+                $('#banner').afterTime(2000, function () {
+                    game.reset();
+                });
                 return true;
             }
             return false;
-        },
-
-        reset: function() {
-
-            $('.box').removeClass('showRight');
-            $('.box').removeClass('showLeft');
-            $('.box').removeClass('clearBlock');
-            $('#banner').html("TIC-TAC-TOE!");
-            this.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
-            stopClick = true;
-            this.turn = 1;
-            cascade();
-        
         }
-
 
         };
     
@@ -138,14 +141,6 @@ $(document).ready(function() {
     // RESET GAME AND GAME BOARD ON RESET BUTTON CLICK
     $('#reset-btn').click(function() {
         game.reset();
-//        $('.box').removeClass('showRight');
-//        $('.box').removeClass('showLeft');
-//        $('.box').removeClass('clearBlock');
-//        $('#banner').html("TIC-TAC-TOE!");
-//        game.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
-//        stopClick = true;
-//        game.turn = 1;
-//        cascade();
     })
     
     // INDIVIDUAL BUTTON CLICKED
