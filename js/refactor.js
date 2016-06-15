@@ -1,10 +1,96 @@
 $(document).ready(function() {
-    var stopClick = true, // disables click during reset
-        board = [" ", " ", " ", " ", " ", " ", " ", " ", " "],
-        winResult;
+    var stopClick = true; // disables click during reset
+    var game = {
+
+        board: [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+
+        // DISPLAY GAMEBOARD IN CONSOLE
+        display_board: function(board) {
+            console.log( " " + board[0] + " | " + board[1] + " | " + board[2] + " ");
+            console.log( "-----------");
+            console.log( " " + board[3] + " | " + board[4] + " | " + board[5] + " ");
+            console.log( "-----------");
+            console.log( " " + board[6] + " | " + board[7] + " | " + board[8] + " ");
+        },
+
+        //RETURN ARRAY OF AVAILABLE GAME SPACES
+        availableMoves: function() {
+            var moves = [],
+                i;
+            for (i = 0; i < this.board.length; i += 1) {
+                if (this.board[i] === " ") {
+                    moves.push(i);
+                }
+            }
+            return moves;
+        },
+
+        // PLAYER MOVES FOR X
+        xMove: function(location, player) {
+            stopClick = true;
+            console.log("Move to " + location + " by X");
+            this.board[location] = "X";
+            this.display_board(this.board);
+            return this.checkWin(this.board);
+        },
+
+        // COMPUTER MOVES FOR O
+        oMove: function() {
+            var avail = this.availableMoves(this.board);
+
+            // select random available space
+            var location = avail[Math.floor(Math.random()*avail.length)];
+
+            console.log("Move to " + location + " by O");
+            this.board[location] = "O";
+            this.display_board(this.board);
+            this.checkWin(this.board);
+            return location;
+        },
+
+        // CHECK TO SEE IF GAME HAS BEEN WON
+        checkWin: function(board) {
+            var winResult;
+            if (board [0] != " " && board[0] === board[1] && board[0] === board[2]) {
+                winResult = board[0] + " WINS!";
+            }
+            if (board [3] != " " && board[3] === board[4] && board[3] === board[5]) {
+                winResult = board[3] + " WINS!";
+            }
+            if (board [6] != " " && board[6] === board[7] && board[6] === board[8]) {
+                winResult = board[6] + " WINS!";
+            }
+            if (board [0] != " " && board[0] === board[3] && board[0] === board[6]) {
+                winResult = board[0] + " WINS!";
+            }
+            if (board [1] != " " && board[1] === board[4] && board[1] === board[7]) {
+                winResult = board[1] + " WINS!";
+            }
+            if (board [2] != " " && board[2] === board[5] && board[2] === board[8]) {
+                winResult = board[2] + " WINS!";
+            }   
+            if (board [0] != " " && board[0] === board[4] && board[0] === board[8]) {
+                winResult = board[0] + " WINS!";
+            }
+            if (board [2] != " " && board[2] === board[4] && board[2] === board[6]) {
+                winResult = board[2] + " WINS!";
+            }
+            // GAME IS OVER
+            if (winResult != undefined) {
+                console.log(winResult);
+                $("#banner").html(winResult);
+                return true;
+            }
+            return false;
+        }
+
+
+
+
+        };
     
     cascade();
-    display_board(board);
+    game.display_board(game.board);
     
     // START OF GAME CASCADING ANIMATION
     function cascade() {
@@ -35,7 +121,7 @@ $(document).ready(function() {
         $('.box').removeClass('showLeft');
         $('.box').removeClass('clearBlock');
         $('#banner').html("TIC-TAC-TOE!");
-        board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
+        game.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
         stopClick = true;
         turn = true;
         cascade();
@@ -48,8 +134,8 @@ $(document).ready(function() {
             $(this).removeClass('clearBlock');
             var location = ( $(this).attr('id') );
             $(this).addClass('showRight');
-            if(!xMove(location, "X")) {
-                var oLoc = oMove();
+            if(!game.xMove(location, "X")) {
+                var oLoc = game.oMove();
                 $('#' + oLoc).afterTime(1000, function() {
                     $('#' + oLoc).addClass('showLeft');
                     return (stopClick = false);
@@ -58,85 +144,6 @@ $(document).ready(function() {
         }
     });
     
-    // DISPLAY GAMEBOARD IN CONSOLE
-    function display_board(board) {
-        console.log( " " + board[0] + " | " + board[1] + " | " + board[2] + " ");
-        console.log( "-----------");
-        console.log( " " + board[3] + " | " + board[4] + " | " + board[5] + " ");
-        console.log( "-----------");
-        console.log( " " + board[6] + " | " + board[7] + " | " + board[8] + " ");
-    }
-
-    //RETURN ARRAY OF AVAILABLE GAME SPACES
-    function availableMoves(board) {
-        var moves = [],
-            i;
-        for (i = 0; i < board.length; i += 1) {
-            if (board[i] === " ") {
-                moves.push(i);
-            }
-        }
-        return moves;
-    }
-
-    // PLAYER MOVES FOR X
-    function xMove(location, player) {
-        stopClick = true;
-        console.log("Move to " + location + " by X");
-        board[location] = "X";
-        display_board(board);
-        return checkWin(board);
-    }
-
-    // COMPUTER MOVES FOR O
-    function oMove() {
-        var avail = availableMoves(board);
-
-        // select random available space
-        var location = avail[Math.floor(Math.random()*avail.length)];
-
-        console.log("Move to " + location + " by O");
-        board[location] = "O";
-        display_board(board);
-        checkWin(board);
-        return location;
-    }
-
-    // CHECK TO SEE IF GAME HAS BEEN WON
-    function checkWin(board) {
-        if (board [0] != " " && board[0] === board[1] && board[0] === board[2]) {
-            winResult = board[0] + " WINS!";
-        }
-        if (board [3] != " " && board[3] === board[4] && board[3] === board[5]) {
-            winResult = board[3] + " WINS!";
-        }
-        if (board [6] != " " && board[6] === board[7] && board[6] === board[8]) {
-            winResult = board[6] + " WINS!";
-        }
-        if (board [0] != " " && board[0] === board[3] && board[0] === board[6]) {
-            winResult = board[0] + " WINS!";
-        }
-        if (board [1] != " " && board[1] === board[4] && board[1] === board[7]) {
-            winResult = board[1] + " WINS!";
-        }
-        if (board [2] != " " && board[2] === board[5] && board[2] === board[8]) {
-            winResult = board[2] + " WINS!";
-        }   
-        if (board [0] != " " && board[0] === board[4] && board[0] === board[8]) {
-            winResult = board[0] + " WINS!";
-        }
-        if (board [2] != " " && board[2] === board[4] && board[2] === board[6]) {
-            winResult = board[2] + " WINS!";
-        }
-        // GAME IS OVER
-        if (winResult != undefined) {
-            console.log(winResult);
-            $("#banner").html(winResult);
-            winResult = undefined;
-            return true;
-        }
-        return false;
-    }
 });
 
 jQuery.fn.extend({
