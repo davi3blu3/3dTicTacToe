@@ -91,9 +91,20 @@ $(document).ready(function() {
                 return true;
             }
             return false;
+        },
+
+        reset: function() {
+
+            $('.box').removeClass('showRight');
+            $('.box').removeClass('showLeft');
+            $('.box').removeClass('clearBlock');
+            $('#banner').html("TIC-TAC-TOE!");
+            this.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
+            stopClick = true;
+            this.turn = 1;
+            cascade();
+        
         }
-
-
 
 
         };
@@ -126,14 +137,15 @@ $(document).ready(function() {
 
     // RESET GAME AND GAME BOARD ON RESET BUTTON CLICK
     $('#reset-btn').click(function() {
-        $('.box').removeClass('showRight');
-        $('.box').removeClass('showLeft');
-        $('.box').removeClass('clearBlock');
-        $('#banner').html("TIC-TAC-TOE!");
-        game.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
-        stopClick = true;
-        game.turn = 1;
-        cascade();
+        game.reset();
+//        $('.box').removeClass('showRight');
+//        $('.box').removeClass('showLeft');
+//        $('.box').removeClass('clearBlock');
+//        $('#banner').html("TIC-TAC-TOE!");
+//        game.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
+//        stopClick = true;
+//        game.turn = 1;
+//        cascade();
     })
     
     // INDIVIDUAL BUTTON CLICKED
