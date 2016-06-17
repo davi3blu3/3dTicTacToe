@@ -137,13 +137,8 @@ $(document).ready(function() {
             stopClick = false;
         });       
     }
-
-    // RESET GAME AND GAME BOARD ON RESET BUTTON CLICK
-    $('#reset-btn').click(function() {
-        game.reset();
-    })
     
-    // INDIVIDUAL BUTTON CLICKED
+    // GAME SPACE BOX CLICKED
     $('.box').on("click", function() {
         //disabled click during reset animation
         if (!stopClick) {
