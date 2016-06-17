@@ -8,8 +8,8 @@ $(document).ready(function() {
         board: [" ", " ", " ", " ", " ", " ", " ", " ", " "],
         
         reset: function() {
-            $('.box').removeClass('showRight');
-            $('.box').removeClass('showLeft');
+            $('.box').removeClass('showX');
+            $('.box').removeClass('showO');
             $('.box').removeClass('clearBlock');
             $('#banner').html("TIC-TAC-TOE!");
             this.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
@@ -19,7 +19,7 @@ $(document).ready(function() {
         },
 
         // DISPLAY GAMEBOARD IN CONSOLE
-        display_board: function(board) {
+        displayBoard: function(board) {
             console.log( " " + board[0] + " | " + board[1] + " | " + board[2] + " ");
             console.log( "-----------");
             console.log( " " + board[3] + " | " + board[4] + " | " + board[5] + " ");
@@ -44,7 +44,7 @@ $(document).ready(function() {
             stopClick = true;
             console.log("Turn " + this.turn + " move to " + location + " by X");
             this.board[location] = "X";
-            //this.display_board(this.board);
+            //this.displayBoard(this.board);
             this.turn += 1;
             return this.checkWin(this.board);
         },
@@ -58,19 +58,20 @@ $(document).ready(function() {
 
             console.log("Turn " + this.turn + " move to " + location + " by O");
             this.board[location] = "O";
-            //this.display_board(this.board);
+            //this.displayBoard(this.board);
             this.checkWin(this.board);
             this.turn += 1;
             return location;
         },
 
-        // CHECK TO SEE IF GAME HAS BEEN WON
+        // CHECK TO SEE IF GAME IS OVER
         checkWin: function(board) {
             var winResult,
                 combos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]],
                 i;
             // GAME IS WON
             for (i = 0; i < combos.length; i += 1) {
+                // check if all items in a combo match, and aren't blank
                 if (board[combos[i][0]] != " " && board[combos[i][0]] === board[combos[i][1]] && board[combos[i][0]] === board[combos[i][2]]) {
                     winResult = board[combos[i][0]] + " WINS!";
                 }
@@ -100,7 +101,7 @@ $(document).ready(function() {
         };
     
     cascade();
-    game.display_board(game.board);
+    game.displayBoard(game.board);
     
     // START OF GAME / RESET CASCADING ANIMATION
     function cascade() {
@@ -131,11 +132,11 @@ $(document).ready(function() {
         if (!stopClick) {
             $(this).removeClass('clearBlock');
             var location = ( $(this).attr('id') );
-            $(this).addClass('showRight');
+            $(this).addClass('showX');
             if(!game.xMove(location, "X")) {
                 var oLoc = game.oMove();
                 $('#' + oLoc).afterTime(1000, function() {
-                    $('#' + oLoc).addClass('showLeft');
+                    $('#' + oLoc).addClass('showO');
                     return (stopClick = false);
                 });
             };

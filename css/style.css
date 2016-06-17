@@ -115,11 +115,11 @@ button {
     transform: translateZ( -50px ) rotateX( -180deg );
 }
 
-.showRight {
+.showX {
     transform: translateZ( -50px ) rotateY(  -90deg );
 }
 
-.showLeft {
+.showO {
     transform: translateZ( -50px ) rotateY(   90deg );
 }
 
