@@ -1,5 +1,8 @@
 $(document).ready(function() {
+    // GLOBAL VARIABLES
     var stopClick = true; // disables click during reset
+    
+    // GAME OBJECT
     var game = {
         turn: 1,
         board: [" ", " ", " ", " ", " ", " ", " ", " ", " "],
@@ -63,30 +66,14 @@ $(document).ready(function() {
 
         // CHECK TO SEE IF GAME HAS BEEN WON
         checkWin: function(board) {
-            var winResult;
-            if (board [0] != " " && board[0] === board[1] && board[0] === board[2]) {
-                winResult = board[0] + " WINS!";
-            }
-            if (board [3] != " " && board[3] === board[4] && board[3] === board[5]) {
-                winResult = board[3] + " WINS!";
-            }
-            if (board [6] != " " && board[6] === board[7] && board[6] === board[8]) {
-                winResult = board[6] + " WINS!";
-            }
-            if (board [0] != " " && board[0] === board[3] && board[0] === board[6]) {
-                winResult = board[0] + " WINS!";
-            }
-            if (board [1] != " " && board[1] === board[4] && board[1] === board[7]) {
-                winResult = board[1] + " WINS!";
-            }
-            if (board [2] != " " && board[2] === board[5] && board[2] === board[8]) {
-                winResult = board[2] + " WINS!";
-            }   
-            if (board [0] != " " && board[0] === board[4] && board[0] === board[8]) {
-                winResult = board[0] + " WINS!";
-            }
-            if (board [2] != " " && board[2] === board[4] && board[2] === board[6]) {
-                winResult = board[2] + " WINS!";
+            var winResult,
+                combos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]],
+                i;
+            // GAME IS WON
+            for (i = 0; i < combos.length; i += 1) {
+                if (board[combos[i][0]] != " " && board[combos[i][0]] === board[combos[i][1]] && board[combos[i][0]] === board[combos[i][2]]) {
+                    winResult = board[combos[i][0]] + " WINS!";
+                }
             }
             // GAME IS TIED
             if (winResult == undefined && game.turn == 10) {
@@ -115,7 +102,7 @@ $(document).ready(function() {
     cascade();
     game.display_board(game.board);
     
-    // START OF GAME CASCADING ANIMATION
+    // START OF GAME / RESET CASCADING ANIMATION
     function cascade() {
         $('.cascade-1').afterTime(2000, function () {
             $('.cascade-1').addClass("clearBlock");
