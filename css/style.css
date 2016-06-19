@@ -8,6 +8,7 @@ header {
 
 body {
     margin: 0;
+    text-align: center;
 }
 
 header h1 {
@@ -23,11 +24,16 @@ button {
 
 /* GAME BLOCKS */
 
+
+.row {
+    margin: 0;
+}
+
 .cube-container {
-    width: 30vh;
-    padding-bottom: 30vh;
+    width: 28vh;
+    padding-bottom: 28vh;
     position: relative;
-    margin: 5vh;
+    margin: 2.66vh;
     display: inline-block;
    
 /*    border: 1px solid #CCC;*/
@@ -108,10 +114,6 @@ button {
 
 
 /* MEDIA QUERIES */
-
-.container {
-    width: 80%;
-}
 
 
 
