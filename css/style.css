@@ -20,8 +20,8 @@ button {
 /* GAME BLOCKS */
 
 .cube-container {
-    width: 150px;
-    height: 150px;
+    width: 70%;
+    padding-bottom: 70%;
     position: relative;
     margin: 50px;
    
@@ -56,6 +56,8 @@ button {
     display: block;
     position: absolute;
     border: 2px solid black;
+    width: 98%;
+    height: 98%;
     line-height: 150%;
     font-size: 95px;
     text-align: center;
@@ -67,26 +69,6 @@ button {
 .box .back {
     background: rgba(255,0,0,1);
 }
-
-.box .front,
-.box .back {
-    width: 98%;
-    height: 98%;    
-}
-
-
-.box .right,
-.box .left {
-    width: 98%;
-    height: 98%;
-}
-
-.box .top,
-.box .bottom {
-    width: 98%;
-    height: 98%;
-}
-
 
 .box .front  {
     transform: rotateX(90deg) translateY(50%) rotateX(-90deg);
