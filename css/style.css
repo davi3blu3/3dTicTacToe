@@ -6,6 +6,10 @@ header {
     text-align: center;
 }
 
+body {
+    margin: 0;
+}
+
 header h1 {
     color: antiquewhite;
     font-weight: bold;
@@ -20,20 +24,17 @@ button {
 /* GAME BLOCKS */
 
 .cube-container {
-    width: 70%;
-    padding-bottom: 70%;
+    width: 30vh;
+    padding-bottom: 30vh;
     position: relative;
-    margin: 50px;
+    margin: 5vh;
+    display: inline-block;
    
 /*    border: 1px solid #CCC;*/
     -webkit-perspective: 900px;
        -moz-perspective: 900px;
          -o-perspective: 900px;
             perspective: 900px;
-}
-
-.col-xs-4 {
-    padding: 0 !important;
 }
 
 .box {
@@ -109,7 +110,7 @@ button {
 /* MEDIA QUERIES */
 
 .container {
-    width: 70%;
+    width: 80%;
 }
 
 
