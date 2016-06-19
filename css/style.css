@@ -1,29 +1,15 @@
 /* HEADER */
 
-header {
-    background-color: dodgerblue;
-    padding: 10px 0 15px 0;
-    text-align: center;
-}
-
 body {
     margin: 0;
     text-align: center;
-}
-
-header h1 {
-    color: antiquewhite;
-    font-weight: bold;
-}
-
-button {
-    color: dodgerblue;
-    font-size: 20px;
-    right: 40px;
+    background-image: url(../img/grass-and-sky.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 /* GAME BLOCKS */
-
 
 .row {
     margin: 0;
@@ -65,8 +51,8 @@ button {
     border: 2px solid black;
     width: 98%;
     height: 98%;
-    line-height: 150%;
-    font-size: 95px;
+    line-height: 28vh;
+    font-size: 20vh;
     text-align: center;
     font-weight: bold;
     color: white;
