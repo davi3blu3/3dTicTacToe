@@ -74,20 +74,17 @@ $(document).ready(function() {
                 // check if all items in a combo match, and aren't blank
                 if (board[combos[i][0]] != " " && board[combos[i][0]] === board[combos[i][1]] && board[combos[i][0]] === board[combos[i][2]]) {
                     winResult = board[combos[i][0]] + " WINS!";
+                    console.log(winResult);
+                    $("#banner").html(winResult);
+                    $('#banner').afterTime(2500, function () {
+                        game.reset();
+                    });
+                    return true;
                 }
             }
             // GAME IS TIED
             if (winResult == undefined && game.turn == 10) {
                 winResult = "TIED!";
-                console.log(winResult);
-                $("#banner").html(winResult);
-                $('#banner').afterTime(2500, function () {
-                    game.reset();
-                });
-                return true;
-            }
-            // GAME IS OVER
-            if (winResult != undefined) {
                 console.log(winResult);
                 $("#banner").html(winResult);
                 $('#banner').afterTime(2500, function () {
