@@ -11,6 +11,7 @@ $(document).ready(function() {
             $('.box').removeClass('showX');
             $('.box').removeClass('showO');
             $('.box').removeClass('clearBlock');
+            $('.box > li').removeClass('winColor');
             $('#banner').html("TIC-TAC-TOE!");
             this.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
             stopClick = true;
@@ -76,6 +77,12 @@ $(document).ready(function() {
                     winResult = board[combos[i][0]] + " WINS!";
                     console.log(winResult);
                     $("#banner").html(winResult);
+                    $('#' + combos[i][0] + ' > li').addClass("winColor");
+                    // console.log("box#" + combos[i][0] + " > li");
+                    $('#' + combos[i][1] + ' > li').addClass("winColor");
+                    // console.log("box#" + board[combos[i][1]] + " > li");
+                    $('#' + combos[i][2] + ' > li').addClass("winColor");
+                    // console.log("box#" + board[combos[i][2]] + " > li");
                     $('#banner').afterTime(2500, function () {
                         game.reset();
                     });
@@ -132,6 +139,7 @@ $(document).ready(function() {
             $(this).addClass('showX');
             if(!game.xMove(location, "X")) {
                 var oLoc = game.oMove();
+                // console.log(typeof oLoc);
                 $('#' + oLoc).afterTime(1000, function() {
                     $('#' + oLoc).addClass('showO');
                     return (stopClick = false);

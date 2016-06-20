@@ -59,6 +59,8 @@ body {
     background: rgba(255,0,0,0.75);
 }
 
+
+
 .box .back {
     background: rgba(255,0,0,1);
 }
@@ -96,6 +98,10 @@ body {
 
 .showO {
     transform: translateZ( -50px ) rotateY(   90deg );
+}
+
+.winColor {
+    background-color: rgba(255,255,0,.75) !important;
 }
 
 
