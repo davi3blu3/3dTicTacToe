@@ -1,6 +1,7 @@
 $(document).ready(function() {
     // GLOBAL VARIABLES
-    var stopClick = true; // disables click during reset
+    var stopClick = true, // disables click during reset
+        userChar; // is user playing X or O
     
     // GAME OBJECT
     var game = {
@@ -105,18 +106,22 @@ $(document).ready(function() {
         };
     
       $('#x').click(function() {
-          $('#modal').fadeOut('fast');
+          $('#modal').fadeOut('slow');
+          $('#grey-screen').fadeOut('slow');
           userChar = "X";
           console.log(userChar);
+          cascade();
       })
       
       $('#o').click(function() {
-          $('#modal').fadeOut('fast');
+          $('#modal').fadeOut('slow');
+          $('#grey-screen').fadeOut('slow');
           userChar = "O";
-          console.log(userChar);  
+          console.log(userChar);
+          cascade();
       })
+
     
-    cascade();
     game.displayBoard(game.board);
     
     // START OF GAME / RESET CASCADING ANIMATION

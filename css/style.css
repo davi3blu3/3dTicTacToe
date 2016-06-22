@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    height: 100%;
     text-align: center;
     background-image: url(../img/grass-and-sky.jpg);
     background-position: center center;
@@ -9,25 +10,37 @@ body {
 
 /* CHARACTER CHOICE MODAL */
 
+#grey-screen {
+    width: 100%;
+    height: inherit;
+    position: absolute;
+    background-color: rgba(0,0,0,.6);
+    z-index: 950;
+}
+
 #modal {
   position: absolute;
       left: 0;
     right: 0;
     margin-left: auto;
     margin-right: auto;
-  top: 40%;
+  top: 33%;
   z-index: 999;
-  width: 180px;
-  padding: 10px;
+  width: 220px;
+  padding: 25px 10px;
   background: #ddd;
   border: 1px solid #333;
   text-align: center;
 }
 
+#modal h3 {
+
+}
+
 #modal button {
-  background: #999;
+  background: #888;
   margin: 10px;
-  font-size: 1.2em;
+  font-size: 1.5em;
   color: white;
 }
 
