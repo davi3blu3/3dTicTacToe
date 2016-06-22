@@ -154,21 +154,13 @@ $(document).ready(function() {
         if (!stopClick) {
             $(this).removeClass('clearBlock');
             var location = ( $(this).attr('id') );
-            if (userChar === "X") {
-                $(this).addClass('showX');
-            } else if (userChar === "O") {
-                $(this).addClass('showO');
-            }
+            $(this).addClass('show' + userChar);
             
             if(!game.xMove(location, userChar)) {
                 var oLoc = game.oMove(compChar);
                 // console.log(typeof oLoc);
                 $('#' + oLoc).afterTime(1000, function() {
-                    if (compChar === "O") {
-                        $('#' + oLoc).addClass('showO');
-                    } else if (compChar === "X") {
-                        $('#' + oLoc).addClass('showX');
-                    }
+                    $('#' + oLoc).addClass('show' + compChar);
                     return (stopClick = false);
                 });
             };
