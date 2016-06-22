@@ -104,6 +104,18 @@ $(document).ready(function() {
 
         };
     
+      $('#x').click(function() {
+          $('#modal').fadeOut('fast');
+          userChar = "X";
+          console.log(userChar);
+      })
+      
+      $('#o').click(function() {
+          $('#modal').fadeOut('fast');
+          userChar = "O";
+          console.log(userChar);  
+      })
+    
     cascade();
     game.displayBoard(game.board);
     
