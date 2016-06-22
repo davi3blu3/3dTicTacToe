@@ -1,7 +1,8 @@
 $(document).ready(function() {
     // GLOBAL VARIABLES
     var stopClick = true, // disables click during reset
-        userChar; // is user playing X or O
+        userChar, // is user playing X or O
+        compChar; // is computer playing X or O
     
     // GAME OBJECT
     var game = {
@@ -42,24 +43,24 @@ $(document).ready(function() {
         },
 
         // PLAYER MOVES FOR X
-        xMove: function(location, player) {
+        xMove: function(location, char) {
             stopClick = true;
-            console.log("Turn " + this.turn + " move to " + location + " by X");
-            this.board[location] = "X";
+            console.log("Turn " + this.turn + " move to " + location + " by " + char);
+            this.board[location] = char;
             //this.displayBoard(this.board);
             this.turn += 1;
             return this.checkWin(this.board);
         },
 
         // COMPUTER MOVES FOR O
-        oMove: function() {
+        oMove: function(char) {
             var avail = this.availableMoves(this.board);
 
             // select random available space
             var location = avail[Math.floor(Math.random()*avail.length)];
 
-            console.log("Turn " + this.turn + " move to " + location + " by O");
-            this.board[location] = "O";
+            console.log("Turn " + this.turn + " move to " + location + " by " + char);
+            this.board[location] = char;
             //this.displayBoard(this.board);
             this.checkWin(this.board);
             this.turn += 1;
@@ -109,7 +110,7 @@ $(document).ready(function() {
           $('#modal').fadeOut('slow');
           $('#grey-screen').fadeOut('slow');
           userChar = "X";
-          console.log(userChar);
+          compChar = "O";
           cascade();
       })
       
@@ -117,7 +118,7 @@ $(document).ready(function() {
           $('#modal').fadeOut('slow');
           $('#grey-screen').fadeOut('slow');
           userChar = "O";
-          console.log(userChar);
+          compChar = "X";
           cascade();
       })
 
@@ -153,12 +154,21 @@ $(document).ready(function() {
         if (!stopClick) {
             $(this).removeClass('clearBlock');
             var location = ( $(this).attr('id') );
-            $(this).addClass('showX');
-            if(!game.xMove(location, "X")) {
-                var oLoc = game.oMove();
+            if (userChar === "X") {
+                $(this).addClass('showX');
+            } else if (userChar === "O") {
+                $(this).addClass('showO');
+            }
+            
+            if(!game.xMove(location, userChar)) {
+                var oLoc = game.oMove(compChar);
                 // console.log(typeof oLoc);
                 $('#' + oLoc).afterTime(1000, function() {
-                    $('#' + oLoc).addClass('showO');
+                    if (compChar === "O") {
+                        $('#' + oLoc).addClass('showO');
+                    } else if (compChar === "X") {
+                        $('#' + oLoc).addClass('showX');
+                    }
                     return (stopClick = false);
                 });
             };
