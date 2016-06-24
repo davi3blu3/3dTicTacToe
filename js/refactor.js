@@ -60,8 +60,6 @@ $(document).ready(function() {
 
             console.log("Turn " + this.turn + " move to " + location + " by " + char);
             this.board[location] = char;
-            //this.displayBoard(this.board);
-            this.checkWin(this.board);
             this.turn += 1;
             return location;
         },
@@ -154,7 +152,10 @@ $(document).ready(function() {
                 // console.log(typeof oLoc);
                 $('#' + oLoc).afterTime(1000, function() {
                     $('#' + oLoc).addClass('show' + compChar);
-                    return (stopClick = false);
+                    if (!game.checkWin(game.board)) {
+                        return (stopClick = false);
+                    };
+                    
                 });
             };
         }
