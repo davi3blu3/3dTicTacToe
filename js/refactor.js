@@ -14,7 +14,6 @@ $(document).ready(function() {
             $('.box').removeClass('showO');
             $('.box').removeClass('clearBlock');
             $('.box > li').removeClass('winColor');
-            $('#banner').html("TIC-TAC-TOE!");
             this.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
             stopClick = true;
             this.turn = 1;
@@ -78,14 +77,13 @@ $(document).ready(function() {
                 if (board[combos[i][0]] != " " && board[combos[i][0]] === board[combos[i][1]] && board[combos[i][0]] === board[combos[i][2]]) {
                     winResult = board[combos[i][0]] + " WINS!";
                     console.log(winResult);
-                    $("#banner").html(winResult);
                     $('#' + combos[i][0] + ' > li').addClass("winColor");
                     // console.log("box#" + combos[i][0] + " > li");
                     $('#' + combos[i][1] + ' > li').addClass("winColor");
                     // console.log("box#" + board[combos[i][1]] + " > li");
                     $('#' + combos[i][2] + ' > li').addClass("winColor");
                     // console.log("box#" + board[combos[i][2]] + " > li");
-                    $('#banner').afterTime(2500, function () {
+                    $('.box').afterTime(2500, function () {
                         game.reset();
                     });
                     return true;
@@ -95,8 +93,7 @@ $(document).ready(function() {
             if (winResult == undefined && game.turn == 10) {
                 winResult = "TIED!";
                 console.log(winResult);
-                $("#banner").html(winResult);
-                $('#banner').afterTime(2500, function () {
+                $('.box').afterTime(2500, function () {
                     game.reset();
                 });
                 return true;
