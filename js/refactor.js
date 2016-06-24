@@ -103,22 +103,18 @@ $(document).ready(function() {
 
         };
     
-      $('#x').click(function() {
+      $('button').click(function() {
           $('#modal').fadeOut('slow');
           $('#grey-screen').fadeOut('slow');
-          userChar = "X";
-          compChar = "O";
+          if ($(this).html() === "X") {
+              userChar = "X";
+              compChar = "O";  
+          } else if ($(this).html() === "O") {
+              userChar = "O";
+              compChar = "X";
+          };
           cascade();
       })
-      
-      $('#o').click(function() {
-          $('#modal').fadeOut('slow');
-          $('#grey-screen').fadeOut('slow');
-          userChar = "O";
-          compChar = "X";
-          cascade();
-      })
-
     
     game.displayBoard(game.board);
     
