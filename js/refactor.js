@@ -117,26 +117,16 @@ $(document).ready(function() {
     game.displayBoard(game.board);
     
     // START OF GAME / RESET CASCADING ANIMATION
-    function cascade() {
-        $('.cascade-1').afterTime(2000, function () {
-            $('.cascade-1').addClass("clearBlock");
+    function cascade() {        
+        var cascadeArr = [".cascade-1", ".cascade-2", ".cascade-3", ".cascade-4", ".cascade-5", ".cascade-6", ],
+            time = 2000
+        cascadeArr.forEach( function(number) {
+            $(number).afterTime(time, function () {
+                $(number).addClass("clearBlock");
+            });
+            time += 250;
         });
-        $('.cascade-2').afterTime(2250, function () {
-            $('.cascade-2').addClass("clearBlock");
-        });
-        $('.cascade-3').afterTime(2500, function () {
-            $('.cascade-3').addClass("clearBlock");
-        });
-        $('.cascade-4').afterTime(2750, function () {
-            $('.cascade-4').addClass("clearBlock");
-        });
-        $('.cascade-5').afterTime(3000, function () {
-            $('.cascade-5').addClass("clearBlock");
-        });
-        $('.cascade-6').afterTime(3250, function () {
-            $('.cascade-6').addClass("clearBlock");
-            stopClick = false;
-        });       
+        stopClick = false;
     }
     
     // GAME SPACE BOX CLICKED
