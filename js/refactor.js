@@ -126,7 +126,10 @@ $(document).ready(function() {
             });
             time += 250;
         });
-        stopClick = false;
+        $(document).afterTime(3250, function () {
+            stopClick = false;
+            console.log("click allowed");
+        });
     }
     
     // GAME SPACE BOX CLICKED
