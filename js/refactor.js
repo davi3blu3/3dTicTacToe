@@ -3,12 +3,12 @@ $(document).ready(function() {
     var stopClick = true, // disables click during reset
         userChar, // is user playing X or O
         compChar; // is computer playing X or O
-    
-    // GAME OBJECT
+
+    // GAME OBJECT CONSTRUCTOR
     var game = function(board) {
 
         this.board = board || [" ", " ", " ", " ", " ", " ", " ", " ", " "];
-        
+
         this.reset = function() {
             $('.box').removeClass('showX');
             $('.box').removeClass('showO');
@@ -41,25 +41,37 @@ $(document).ready(function() {
             return moves;
         };
 
+        this.turn = 9 - this.availableMoves().length;
+
+        this.applyMove = function(move) {
+
+            var newBoard = this.board;
+            newBoard[move] = (this.turn % 2 == 0) ? compChar : userChar;
+            var instance = new game(newBoard);
+
+            return instance;
+        }
+
         // PLAYER MOVES
         this.xMove = function(location, char) {
+            this.turn += 1;
             stopClick = true;
             //console.log("Turn " + this.turn + " move to " + location + " by " + char);
             this.board[location] = char;
-            this.turn += 1;
             return this.checkWin(this.board);
         };
 
         // COMPUTER MOVES
         this.oMove = function(char) {
-            var avail = this.availableMoves(this.board);
-
+            this.turn += 1;
+            //var avail = this.availableMoves(this.board);
             // select random available space
-            var location = avail[Math.floor(Math.random()*avail.length)];
-
+            // var location = avail[Math.floor(Math.random()*avail.length)];
+            var result = bestMoveAndScore(newGame);
+            var location = result.move;
+            this.applyMove(location);
             //console.log("Turn " + this.turn + " move to " + location + " by " + char);
             this.board[location] = char;
-            this.turn += 1;
             return location;
         };
 
@@ -73,7 +85,7 @@ $(document).ready(function() {
                 // check if all items in a combo match, and aren't blank
                 if (board[combos[i][0]] != " " && board[combos[i][0]] === board[combos[i][1]] && board[combos[i][0]] === board[combos[i][2]]) {
                     winResult = board[combos[i][0]] + " WINS!";
-                    console.log(winResult);
+                    //console.log(winResult);
                     $('#' + combos[i][0] + ' > li').addClass("winColor");
                     $('#' + combos[i][1] + ' > li').addClass("winColor");
                     $('#' + combos[i][2] + ' > li').addClass("winColor");
@@ -81,34 +93,53 @@ $(document).ready(function() {
                         newGame.reset();
                     });
                     // pass the character (X or O) that won
-                    console.log(this.scoreFinishedGame(board[combos[i][0]]));
+                    //console.log(this.scoreFinishedGame(board[combos[i][0]]));
                     return true;
                 }
             }
             // GAME IS TIED
             if (winResult == undefined && game.turn == 10) {
                 winResult = "TIED!";
-                console.log(winResult);
+                //console.log(winResult);
                 $('.box').afterTime(2500, function () {
                     game.reset();
                 });
-                console.log(this.scoreFinishedGame(winResult));
+                //console.log(this.scoreFinishedGame(winResult));
                 return true;
             }
             return false;
         };
 
-        this.scoreFinishedGame = function(result) {
-            if (result === compChar) {
-                return 1;
-            } else if (result === "TIED!") {
-                return 0;
-            } else if (result === userChar) {
-                return -1;
-            }
+        this.scoreFinishedGame = function() {
+            var winner = 
         };
+
     }; // END OF GAME OBJECT CONTRUCTOR
     
+    function bestMoveAndScore(game) {
+        var bestMove;
+        var bestScore = -2;
+        game.availableMoves().forEach(function (move) {
+            var score = scoreMove(game, move);
+            //console.log(score);
+            if (score > bestScore) {
+                bestMove = move;
+                bestScore = score;
+            }
+        });
+        return {move: bestMove, score: bestScore};
+    }
+
+    function scoreMove(game, move) {
+        var after = game.applyMove(move);
+        if (after.availableMoves().length === 0) {
+            return after.scoreFinishedGame();
+        }
+        var reply = bestMoveAndScore(after);
+        return -reply.score;
+    }
+
+
     var newGame = new game();
 
 
@@ -155,7 +186,7 @@ $(document).ready(function() {
                 $('#' + oLoc).afterTime(1000, function() {
                     $('#' + oLoc).addClass('show' + compChar);
                     if (!newGame.checkWin(newGame.board)) {
-                        console.log(newGame.availableMoves());
+                        //console.log(newGame.availableMoves());
                         return (stopClick = false);
                     };
                     
