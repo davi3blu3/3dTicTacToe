@@ -53,38 +53,41 @@ $(document).ready(function() {
         }
 
         // PLAYER MOVES
-        this.xMove = function(location, char) {
+        this.xMove = function(location) {
             this.turn += 1;
             stopClick = true;
             //console.log("Turn " + this.turn + " move to " + location + " by " + char);
-            this.board[location] = char;
-            return this.checkWin(this.board);
+            this.board[location] = userChar;
+            return this.checkWin();
         };
 
         // COMPUTER MOVES
-        this.oMove = function(char) {
+        this.oMove = function() {
             this.turn += 1;
-            //var avail = this.availableMoves(this.board);
-            // select random available space
+            
+            //DUMB AI
+            // var avail = this.availableMoves(this.board);
             // var location = avail[Math.floor(Math.random()*avail.length)];
-            var result = bestMoveAndScore(newGame);
-            var location = result.move;
-            this.applyMove(location);
+
+            // NOT WORKING AI
+            // var result = bestMoveAndScore(newGame);
+            // var location = result.move;
             //console.log("Turn " + this.turn + " move to " + location + " by " + char);
-            this.board[location] = char;
+
+            this.board[location] = compChar;
             return location;
         };
 
         // CHECK TO SEE IF GAME IS OVER
-        this.checkWin = function(board) {
+        this.checkWin = function() {
             var winResult,
                 combos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]],
                 i;
             // GAME IS WON
             for (i = 0; i < combos.length; i += 1) {
                 // check if all items in a combo match, and aren't blank
-                if (board[combos[i][0]] != " " && board[combos[i][0]] === board[combos[i][1]] && board[combos[i][0]] === board[combos[i][2]]) {
-                    winResult = board[combos[i][0]] + " WINS!";
+                if (this.board[combos[i][0]] != " " && this.board[combos[i][0]] === this.board[combos[i][1]] && this.board[combos[i][0]] === this.board[combos[i][2]]) {
+                    winResult = this.board[combos[i][0]] + " WINS!";
                     //console.log(winResult);
                     $('#' + combos[i][0] + ' > li').addClass("winColor");
                     $('#' + combos[i][1] + ' > li').addClass("winColor");
@@ -92,9 +95,7 @@ $(document).ready(function() {
                     $('.box').afterTime(2500, function () {
                         newGame.reset();
                     });
-                    // pass the character (X or O) that won
-                    //console.log(this.scoreFinishedGame(board[combos[i][0]]));
-                    return true;
+                    return winResult;
                 }
             }
             // GAME IS TIED
@@ -105,13 +106,21 @@ $(document).ready(function() {
                     game.reset();
                 });
                 //console.log(this.scoreFinishedGame(winResult));
-                return true;
+                return winResult;
             }
             return false;
         };
 
         this.scoreFinishedGame = function() {
-            var winner = 
+            var winner = this.checkWin();
+            console.log("Winner is " + winner[0]);
+            if (winner[0] === compChar) {
+                return 1;
+            } else if (winner[0] === userChar) {
+                return -1;
+            } else {
+                return 0;
+            }
         };
 
     }; // END OF GAME OBJECT CONTRUCTOR
@@ -180,14 +189,14 @@ $(document).ready(function() {
             var location = ( $(this).attr('id') );
             $(this).addClass('show' + userChar);
             
-            if(!newGame.xMove(location, userChar)) {
-                var oLoc = newGame.oMove(compChar);
+            if(!newGame.xMove(userChar)) {
+                var oLoc = newGame.oMove();
                 // console.log(typeof oLoc);
                 $('#' + oLoc).afterTime(1000, function() {
                     $('#' + oLoc).addClass('show' + compChar);
-                    if (!newGame.checkWin(newGame.board)) {
+                    if (!newGame.checkWin()) {
                         //console.log(newGame.availableMoves());
-                        return (stopClick = false);
+                        stopClick = false;
                     };
                     
                 });
