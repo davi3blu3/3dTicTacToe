@@ -91,12 +91,6 @@ body {
     text-align: center;
     font-weight: bold;
     color: white;
-    background: rgba(255,0,0,0.75);
-}
-
-
-
-.box .back {
     background: rgba(255,0,0,1);
 }
 
@@ -136,7 +130,7 @@ body {
 }
 
 .winColor {
-    background-color: rgba(255,255,0,.75) !important;
+    background-color: rgba(255,255,0,1) !important;
 }
 
 

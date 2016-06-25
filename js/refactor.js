@@ -5,11 +5,11 @@ $(document).ready(function() {
         compChar; // is computer playing X or O
     
     // GAME OBJECT
-    var game = {
-        turn: 1,
-        board: [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+    var game = function(board) {
+
+        this.board = board || [" ", " ", " ", " ", " ", " ", " ", " ", " "];
         
-        reset: function() {
+        this.reset = function() {
             $('.box').removeClass('showX');
             $('.box').removeClass('showO');
             $('.box').removeClass('clearBlock');
@@ -18,19 +18,19 @@ $(document).ready(function() {
             stopClick = true;
             this.turn = 1;
             cascade();
-        },
+        };
 
         // DISPLAY GAMEBOARD IN CONSOLE
-        displayBoard: function(board) {
-            console.log( " " + board[0] + " | " + board[1] + " | " + board[2] + " ");
-            console.log( "-----------");
-            console.log( " " + board[3] + " | " + board[4] + " | " + board[5] + " ");
-            console.log( "-----------");
-            console.log( " " + board[6] + " | " + board[7] + " | " + board[8] + " ");
-        },
+        // this.displayBoard = function(board) {
+        //     console.log( " " + board[0] + " | " + board[1] + " | " + board[2] + " ");
+        //     console.log( "-----------");
+        //     console.log( " " + board[3] + " | " + board[4] + " | " + board[5] + " ");
+        //     console.log( "-----------");
+        //     console.log( " " + board[6] + " | " + board[7] + " | " + board[8] + " ");
+        // };
 
         //RETURN ARRAY OF AVAILABLE GAME SPACES
-        availableMoves: function() {
+        this.availableMoves = function() {
             var moves = [],
                 i;
             for (i = 0; i < this.board.length; i += 1) {
@@ -39,33 +39,32 @@ $(document).ready(function() {
                 }
             }
             return moves;
-        },
+        };
 
-        // PLAYER MOVES FOR X
-        xMove: function(location, char) {
+        // PLAYER MOVES
+        this.xMove = function(location, char) {
             stopClick = true;
-            console.log("Turn " + this.turn + " move to " + location + " by " + char);
+            //console.log("Turn " + this.turn + " move to " + location + " by " + char);
             this.board[location] = char;
-            //this.displayBoard(this.board);
             this.turn += 1;
             return this.checkWin(this.board);
-        },
+        };
 
-        // COMPUTER MOVES FOR O
-        oMove: function(char) {
+        // COMPUTER MOVES
+        this.oMove = function(char) {
             var avail = this.availableMoves(this.board);
 
             // select random available space
             var location = avail[Math.floor(Math.random()*avail.length)];
 
-            console.log("Turn " + this.turn + " move to " + location + " by " + char);
+            //console.log("Turn " + this.turn + " move to " + location + " by " + char);
             this.board[location] = char;
             this.turn += 1;
             return location;
-        },
+        };
 
         // CHECK TO SEE IF GAME IS OVER
-        checkWin: function(board) {
+        this.checkWin = function(board) {
             var winResult,
                 combos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]],
                 i;
@@ -76,14 +75,13 @@ $(document).ready(function() {
                     winResult = board[combos[i][0]] + " WINS!";
                     console.log(winResult);
                     $('#' + combos[i][0] + ' > li').addClass("winColor");
-                    // console.log("box#" + combos[i][0] + " > li");
                     $('#' + combos[i][1] + ' > li').addClass("winColor");
-                    // console.log("box#" + board[combos[i][1]] + " > li");
                     $('#' + combos[i][2] + ' > li').addClass("winColor");
-                    // console.log("box#" + board[combos[i][2]] + " > li");
                     $('.box').afterTime(2500, function () {
-                        game.reset();
+                        newGame.reset();
                     });
+                    // pass the character (X or O) that won
+                    console.log(this.scoreFinishedGame(board[combos[i][0]]));
                     return true;
                 }
             }
@@ -94,13 +92,26 @@ $(document).ready(function() {
                 $('.box').afterTime(2500, function () {
                     game.reset();
                 });
+                console.log(this.scoreFinishedGame(winResult));
                 return true;
             }
             return false;
-        }
-
         };
+
+        this.scoreFinishedGame = function(result) {
+            if (result === compChar) {
+                return 1;
+            } else if (result === "TIED!") {
+                return 0;
+            } else if (result === userChar) {
+                return -1;
+            }
+        };
+    }; // END OF GAME OBJECT CONTRUCTOR
     
+    var newGame = new game();
+
+
       $('button').click(function() {
           $('#modal').fadeOut('slow');
           $('#grey-screen').fadeOut('slow');
@@ -114,8 +125,6 @@ $(document).ready(function() {
           cascade();
       })
     
-    game.displayBoard(game.board);
-    
     // START OF GAME / RESET CASCADING ANIMATION
     function cascade() {        
         var cascadeArr = [".cascade-1", ".cascade-2", ".cascade-3", ".cascade-4", ".cascade-5", ".cascade-6", ],
@@ -128,7 +137,7 @@ $(document).ready(function() {
         });
         $(document).afterTime(3250, function () {
             stopClick = false;
-            console.log("click allowed");
+            //console.log("click allowed");
         });
     }
     
@@ -140,12 +149,13 @@ $(document).ready(function() {
             var location = ( $(this).attr('id') );
             $(this).addClass('show' + userChar);
             
-            if(!game.xMove(location, userChar)) {
-                var oLoc = game.oMove(compChar);
+            if(!newGame.xMove(location, userChar)) {
+                var oLoc = newGame.oMove(compChar);
                 // console.log(typeof oLoc);
                 $('#' + oLoc).afterTime(1000, function() {
                     $('#' + oLoc).addClass('show' + compChar);
-                    if (!game.checkWin(game.board)) {
+                    if (!newGame.checkWin(newGame.board)) {
+                        console.log(newGame.availableMoves());
                         return (stopClick = false);
                     };
                     
