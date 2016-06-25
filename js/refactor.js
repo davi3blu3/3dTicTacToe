@@ -189,7 +189,7 @@ $(document).ready(function() {
             var location = ( $(this).attr('id') );
             $(this).addClass('show' + userChar);
             
-            if(!newGame.xMove(userChar)) {
+            if(!newGame.xMove(location)) {
                 var oLoc = newGame.oMove();
                 // console.log(typeof oLoc);
                 $('#' + oLoc).afterTime(1000, function() {
