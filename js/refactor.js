@@ -10,14 +10,8 @@ $(document).ready(function() {
         this.board = board || [" ", " ", " ", " ", " ", " ", " ", " ", " "];
 
         this.reset = function() {
-            $('.box').removeClass('showX');
-            $('.box').removeClass('showO');
-            $('.box').removeClass('clearBlock');
-            $('.box > li').removeClass('winColor');
             this.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
-            stopClick = true;
-            this.turn = 1;
-            cascade();
+            this.turn = 0;
         };
 
         // DISPLAY GAMEBOARD IN CONSOLE
@@ -56,9 +50,7 @@ $(document).ready(function() {
         this.xMove = function(location) {
             this.turn += 1;
             stopClick = true;
-            //console.log("Turn " + this.turn + " move to " + location + " by " + char);
             this.board[location] = userChar;
-            return this.checkWin();
         };
 
         // COMPUTER MOVES
@@ -66,13 +58,13 @@ $(document).ready(function() {
             this.turn += 1;
             
             //DUMB AI
-            // var avail = this.availableMoves(this.board);
-            // var location = avail[Math.floor(Math.random()*avail.length)];
+            var avail = this.availableMoves(this.board);
+            var location = avail[Math.floor(Math.random()*avail.length)];
 
             // NOT WORKING AI
             // var result = bestMoveAndScore(newGame);
             // var location = result.move;
-            //console.log("Turn " + this.turn + " move to " + location + " by " + char);
+            //console.log("Turn " + this.turn + " move to " + location + " by " + compChar);
 
             this.board[location] = compChar;
             return location;
@@ -88,24 +80,13 @@ $(document).ready(function() {
                 // check if all items in a combo match, and aren't blank
                 if (this.board[combos[i][0]] != " " && this.board[combos[i][0]] === this.board[combos[i][1]] && this.board[combos[i][0]] === this.board[combos[i][2]]) {
                     winResult = this.board[combos[i][0]] + " WINS!";
-                    //console.log(winResult);
-                    $('#' + combos[i][0] + ' > li').addClass("winColor");
-                    $('#' + combos[i][1] + ' > li').addClass("winColor");
-                    $('#' + combos[i][2] + ' > li').addClass("winColor");
-                    $('.box').afterTime(2500, function () {
-                        newGame.reset();
-                    });
-                    return winResult;
+                    console.log("checkwin returning " + combos[i]);
+                    return combos[i];
                 }
             }
             // GAME IS TIED
             if (winResult == undefined && game.turn == 10) {
                 winResult = "TIED!";
-                //console.log(winResult);
-                $('.box').afterTime(2500, function () {
-                    game.reset();
-                });
-                //console.log(this.scoreFinishedGame(winResult));
                 return winResult;
             }
             return false;
@@ -168,7 +149,7 @@ $(document).ready(function() {
     // START OF GAME / RESET CASCADING ANIMATION
     function cascade() {        
         var cascadeArr = [".cascade-1", ".cascade-2", ".cascade-3", ".cascade-4", ".cascade-5", ".cascade-6", ],
-            time = 2000
+            time = 2000;
         cascadeArr.forEach( function(number) {
             $(number).afterTime(time, function () {
                 $(number).addClass("clearBlock");
@@ -180,29 +161,69 @@ $(document).ready(function() {
             //console.log("click allowed");
         });
     }
+
+    function animateWin(winLoc) {
+        $('#' + winLoc[0] + ' > li').addClass("winColor");
+        $('#' + winLoc[1] + ' > li').addClass("winColor");
+        $('#' + winLoc[2] + ' > li').addClass("winColor");
+        $('.box').afterTime(2500, function () {
+            animateReset();
+            newGame.reset();
+        });
+    }
     
     // GAME SPACE BOX CLICKED
     $('.box').on("click", function() {
-        //disabled click during reset animation
+        var winCombo;
+        // check if click is allowed
         if (!stopClick) {
+
+            // animate user move to DOM
             $(this).removeClass('clearBlock');
-            var location = ( $(this).attr('id') );
             $(this).addClass('show' + userChar);
+
+            // capture id of clicked box (location of move)
+            var location = ( $(this).attr('id') );
             
-            if(!newGame.xMove(location)) {
+            // call xMove which stops click, increments turn
+            newGame.xMove(location);
+
+            // check if game over
+            winCombo = newGame.checkWin();
+            if (!winCombo) {
+                // computer's turn
                 var oLoc = newGame.oMove();
-                // console.log(typeof oLoc);
+
+                // trigger animation
                 $('#' + oLoc).afterTime(1000, function() {
                     $('#' + oLoc).addClass('show' + compChar);
-                    if (!newGame.checkWin()) {
-                        //console.log(newGame.availableMoves());
-                        stopClick = false;
-                    };
-                    
                 });
-            };
-        }
+
+                // check if game over
+                winCombo = newGame.checkWin();
+                console.log("wincombo = " + winCombo);
+                if (!winCombo) {
+                    stopClick = false;
+                } else {
+                    console.log("win detected");
+                    animateWin(winCombo);
+                }; // if / else O won
+                    
+            } else {
+                console.log("win detected");
+                animateWin(winCombo);
+            }; // if /else X won
+        } // if turn allowed by click
     });
+
+    function animateReset() {
+        $('.box').removeClass('showX');
+        $('.box').removeClass('showO');
+        $('.box').removeClass('clearBlock');
+        $('.box > li').removeClass('winColor');
+        stopClick = true;
+        cascade();
+    }
     
 });
 
