@@ -1,10 +1,14 @@
 $(document).ready(function() {
-    // GLOBAL VARIABLES
+    /*
+    /   ***   GLOBAL VARIABLES   ***
+    */
     var stopClick = true, // disables click during reset
         userChar, // is user playing X or O
         compChar; // is computer playing X or O
 
-    // GAME OBJECT CONSTRUCTOR
+    /*
+    /   ***   GAME OBJECT CONSTRUCTOR ***
+    */
     var game = function(board) {
 
         this.board = board || [" ", " ", " ", " ", " ", " ", " ", " ", " "];
@@ -14,14 +18,6 @@ $(document).ready(function() {
             this.turn = 0;
         };
 
-        // DISPLAY GAMEBOARD IN CONSOLE
-        // this.displayBoard = function(board) {
-        //     console.log( " " + board[0] + " | " + board[1] + " | " + board[2] + " ");
-        //     console.log( "-----------");
-        //     console.log( " " + board[3] + " | " + board[4] + " | " + board[5] + " ");
-        //     console.log( "-----------");
-        //     console.log( " " + board[6] + " | " + board[7] + " | " + board[8] + " ");
-        // };
 
         //RETURN ARRAY OF AVAILABLE GAME SPACES
         this.availableMoves = function() {
@@ -38,11 +34,9 @@ $(document).ready(function() {
         this.turn = 9 - this.availableMoves().length;
 
         this.applyMove = function(move) {
-
             var newBoard = this.board;
             newBoard[move] = (this.turn % 2 == 0) ? compChar : userChar;
             var instance = new game(newBoard);
-
             return instance;
         }
 
@@ -61,7 +55,7 @@ $(document).ready(function() {
             var avail = this.availableMoves(this.board);
             var location = avail[Math.floor(Math.random()*avail.length)];
 
-            // NOT WORKING AI
+            // NOT WORKING SMART AI
             // var result = bestMoveAndScore(newGame);
             // var location = result.move;
             //console.log("Turn " + this.turn + " move to " + location + " by " + compChar);
@@ -103,8 +97,12 @@ $(document).ready(function() {
                 return 0;
             }
         };
-
     }; // END OF GAME OBJECT CONTRUCTOR
+
+
+    /*
+    /   ***   ARTIFICIAL INTELLIGENCE   ***
+    */
     
     function bestMoveAndScore(game) {
         var bestMove;
@@ -130,48 +128,23 @@ $(document).ready(function() {
     }
 
 
-    var newGame = new game();
+    /*
+    /   ***   CLICK EVENTS   ***
+    */
 
+    $('button').click(function() {
+        $('#modal').fadeOut('slow');
+        $('#grey-screen').fadeOut('slow');
+        if ($(this).html() === "X") {
+            userChar = "X";
+            compChar = "O";  
+        } else if ($(this).html() === "O") {
+            userChar = "O";
+            compChar = "X";
+        };
+        cascade();
+    })
 
-      $('button').click(function() {
-          $('#modal').fadeOut('slow');
-          $('#grey-screen').fadeOut('slow');
-          if ($(this).html() === "X") {
-              userChar = "X";
-              compChar = "O";  
-          } else if ($(this).html() === "O") {
-              userChar = "O";
-              compChar = "X";
-          };
-          cascade();
-      })
-    
-    // START OF GAME / RESET CASCADING ANIMATION
-    function cascade() {        
-        var cascadeArr = [".cascade-1", ".cascade-2", ".cascade-3", ".cascade-4", ".cascade-5", ".cascade-6", ],
-            time = 2000;
-        cascadeArr.forEach( function(number) {
-            $(number).afterTime(time, function () {
-                $(number).addClass("clearBlock");
-            });
-            time += 250;
-        });
-        $(document).afterTime(3250, function () {
-            stopClick = false;
-            //console.log("click allowed");
-        });
-    }
-
-    function animateWin(winLoc) {
-        $('#' + winLoc[0] + ' > li').addClass("winColor");
-        $('#' + winLoc[1] + ' > li').addClass("winColor");
-        $('#' + winLoc[2] + ' > li').addClass("winColor");
-        $('.box').afterTime(2500, function () {
-            animateReset();
-            newGame.reset();
-        });
-    }
-    
     // GAME SPACE BOX CLICKED
     $('.box').on("click", function() {
         var winCombo;
@@ -209,6 +182,13 @@ $(document).ready(function() {
                     animateWin(winCombo);
                 }; // if / else O won
                     
+            } else if (winCombo == "TIED!") {
+                // handle tie
+                $('.box').afterTime(2500, function () {
+                    animateReset();
+                    newGame.reset();
+                });
+
             } else {
                 console.log("win detected");
                 animateWin(winCombo);
@@ -216,6 +196,36 @@ $(document).ready(function() {
         } // if turn allowed by click
     });
 
+    /*
+    /   ***   ANIMATIONS   ***
+    */
+
+    // START OF GAME / RESET CASCADING ANIMATION
+    function cascade() {        
+        var cascadeArr = [".cascade-1", ".cascade-2", ".cascade-3", ".cascade-4", ".cascade-5", ".cascade-6", ],
+            time = 2000;
+        cascadeArr.forEach( function(number) {
+            $(number).afterTime(time, function () {
+                $(number).addClass("clearBlock");
+            });
+            time += 250;
+        });
+        $(document).afterTime(3250, function () {
+            stopClick = false;
+            //console.log("click allowed");
+        });
+    }
+
+    function animateWin(winLoc) {
+        $('#' + winLoc[0] + ' > li').addClass("winColor");
+        $('#' + winLoc[1] + ' > li').addClass("winColor");
+        $('#' + winLoc[2] + ' > li').addClass("winColor");
+        $('.box').afterTime(2500, function () {
+            animateReset();
+            newGame.reset();
+        });
+    }
+    
     function animateReset() {
         $('.box').removeClass('showX');
         $('.box').removeClass('showO');
@@ -224,15 +234,16 @@ $(document).ready(function() {
         stopClick = true;
         cascade();
     }
-    
-});
 
-jQuery.fn.extend({
-    afterTime: function (sec, callback) {
-        that = $(this);
-        setTimeout(function () {
-            callback.call(that);
-        }, sec);
-        return this;
-    }
+    jQuery.fn.extend({
+        afterTime: function (sec, callback) {
+            that = $(this);
+            setTimeout(function () {
+                callback.call(that);
+            }, sec);
+            return this;
+        }
+    });
+
+    var newGame = new game();
 });
