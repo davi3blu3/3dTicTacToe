@@ -9,9 +9,11 @@ $(document).ready(function() {
     /*
     /   ***   GAME OBJECT CONSTRUCTOR ***
     */
-    var game = function(board) {
+    var game = function(board, turn) {
 
         this.board = board || [" ", " ", " ", " ", " ", " ", " ", " ", " "];
+
+        this.turn = turn || 0;
 
         this.reset = function() {
             this.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
@@ -79,7 +81,7 @@ $(document).ready(function() {
                 }
             }
             // GAME IS TIED
-            if (winResult == undefined && game.turn == 10) {
+            if (winResult == undefined && game.turn == 9) {
                 winResult = "TIED!";
                 return winResult;
             }
@@ -132,6 +134,7 @@ $(document).ready(function() {
     /   ***   CLICK EVENTS   ***
     */
 
+    // CHARACTER CHOICE at GAME START
     $('button').click(function() {
         $('#modal').fadeOut('slow');
         $('#grey-screen').fadeOut('slow');
