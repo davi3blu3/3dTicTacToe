@@ -19,29 +19,25 @@ body {
 }
 
 #modal {
-  position: absolute;
-      left: 0;
+    position: absolute;
+    left: 0;
     right: 0;
     margin-left: auto;
     margin-right: auto;
-  top: 33%;
-  z-index: 999;
-  width: 220px;
-  padding: 25px 10px;
-  background: #ddd;
-  border: 3px solid #000;
-  text-align: center;
-}
-
-#modal h3 {
-
+    top: 33%;
+    z-index: 999;
+    width: 220px;
+    padding: 25px 10px;
+    background: #ddd;
+    border: 3px solid #000;
+    text-align: center;
 }
 
 #modal button {
-  background: #888;
-  margin: 10px;
-  font-size: 1.5em;
-  color: white;
+    background: #888;
+    margin: 10px;
+    font-size: 1.5em;
+    color: white;
 }
 
 /* GAME BLOCKS */
@@ -51,10 +47,10 @@ body {
 }
 
 .cube-container {
-    width: 28vh;
-    padding-bottom: 28vh;
+    width: 28vw;
+    padding-bottom: 28vw;
     position: relative;
-    margin: 2.66vh;
+    margin: 1.75vw;
     display: inline-block;
    
 /*    border: 1px solid #CCC;*/
@@ -86,8 +82,8 @@ body {
     border: 2px solid black;
     width: 98%;
     height: 98%;
-    line-height: 28vh;
-    font-size: 20vh;
+    line-height: 28vw;
+    font-size: 20vw;
     text-align: center;
     font-weight: bold;
     color: white;
@@ -136,6 +132,30 @@ body {
 
 /* MEDIA QUERIES */
 
+@media (min-width: 530px) {
+
+  .cube-container {
+      width: 28vh;
+      padding-bottom: 28vh;
+      margin: 2.66vh;
+  }
+
+  .box li {
+      line-height: 28vh;
+      font-size: 20vh;
+  }
+
+}
+
+
+@media (min-width: 800px) {
+
+}
+
+
+@media (min-width: 1200px) {
+
+}
 
 
 
