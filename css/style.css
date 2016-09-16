@@ -134,6 +134,11 @@ body {
 
 @media (min-width: 530px) {
 
+}
+
+
+@media (min-width: 800px) {
+
   .cube-container {
       width: 28vh;
       padding-bottom: 28vh;
@@ -144,11 +149,6 @@ body {
       line-height: 28vh;
       font-size: 20vh;
   }
-
-}
-
-
-@media (min-width: 800px) {
 
 }
 
