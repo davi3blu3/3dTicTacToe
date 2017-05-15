@@ -1,7 +1,4 @@
 $(document).ready(function() {
-    /*
-    /   ***   GLOBAL VARIABLES   ***
-    */
     var stopClick = true, // disables click during reset
         userChar, // is user playing X or O
         compChar; // is computer playing X or O
@@ -52,16 +49,8 @@ $(document).ready(function() {
         // COMPUTER MOVES
         this.oMove = function() {
             this.turn += 1;
-            
-            //DUMB AI
             var avail = this.availableMoves(this.board);
             var location = avail[Math.floor(Math.random()*avail.length)];
-
-            // NOT WORKING SMART AI
-            // var result = bestMoveAndScore(newGame);
-            // var location = result.move;
-            //console.log("Turn " + this.turn + " move to " + location + " by " + compChar);
-
             this.board[location] = compChar;
             return location;
         };
@@ -101,37 +90,8 @@ $(document).ready(function() {
         };
     }; // END OF GAME OBJECT CONTRUCTOR
 
-
     /*
-    /   ***   ARTIFICIAL INTELLIGENCE   ***
-    */
-    
-    function bestMoveAndScore(game) {
-        var bestMove;
-        var bestScore = -2;
-        game.availableMoves().forEach(function (move) {
-            var score = scoreMove(game, move);
-            //console.log(score);
-            if (score > bestScore) {
-                bestMove = move;
-                bestScore = score;
-            }
-        });
-        return {move: bestMove, score: bestScore};
-    }
-
-    function scoreMove(game, move) {
-        var after = game.applyMove(move);
-        if (after.availableMoves().length === 0) {
-            return after.scoreFinishedGame();
-        }
-        var reply = bestMoveAndScore(after);
-        return -reply.score;
-    }
-
-
-    /*
-    /   ***   CLICK EVENTS   ***
+    /   ***   HANDLE CLICK EVENTS   ***
     */
 
     // CHARACTER CHOICE at GAME START
