@@ -114,30 +114,7 @@ body {
   background-color: yellow !important; }
 
 /* MEDIA QUERIES */
-/*
-@media (min-width: 530px) {
 
-}
-
-@media (min-width: 800px) {
-
-  .cube-container {
-      width: 28vh;
-      padding-bottom: 28vh;
-      margin: 2.66vh;
-  }
-
-  .box li {
-      line-height: 28vh;
-      font-size: 20vh;
-  }
-
-}
-
-@media (min-width: 1200px) {
-
-}
-*/
 @media all and (orientation: portrait) {
   .cube-container {
     width: 28vw;
